@@ -1,0 +1,10 @@
+version : 2
+models:
+    - name: stg_customer
+sources:
+    - name: dbt_skumar
+      database: raw
+      schema: dbt_skumar
+      tables:
+        - name: raw_customer
+ 
