@@ -1,0 +1,1 @@
+select * from {{source('DBT_SKUMAR_STAGING','stg_customers')}}

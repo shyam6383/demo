@@ -2,9 +2,9 @@ version : 2
 models:
     - name: stg_customer
 sources:
-    - name: dbt_skumar
+    - name: dbt_skumar_raw
       database: raw
-      schema: dbt_skumar
+      schema: dbt_skumar_raw
       tables:
         - name: raw_customer
  
