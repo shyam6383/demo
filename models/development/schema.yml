@@ -1,7 +1,6 @@
 version : 2
 models:
     - name: dev_customer
-    - name: dev_confirmed
 sources:
     - name: DBT_SKUMAR_STAGING
       database: raw
