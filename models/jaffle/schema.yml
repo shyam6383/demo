@@ -1,0 +1,121 @@
+version : 2
+models:
+    - name: raw_customer
+      description: '{{ doc("new") }}'
+      columns:
+            - name: id
+              description: "id as customer id"
+            - name: first_name
+              description: "first_name as customer first_name"
+            - name: last_name
+              description: "last_name as customer last_name"
+
+    - name: raw_order
+      description: "table as raw_order"
+      columns:
+            - name: id
+              description: "id as order id"
+            - name: user_id
+              description: "user_id as customer user_id"
+            - name: order_date
+              description: "order_date as customer order_date"
+            - name: status
+              description: "status as order status"
+              tests:
+                - accepted_values:
+                    values: ['placed', 'shipped', 'completed', 'returned','return_pending']
+            - name: _etl_loaded_at
+              description: "_etl_loaded_at as order _etl_loaded_at"
+            - name: payment_details
+              description: "table as payment_details"
+
+    - name: raw_payment
+      description: "table as raw_payment"
+      columns:
+            - name: id
+              description: "id as payment_id"
+              tests:
+                - relationships:
+                    to: ref('raw_payment')
+                    field: id 
+            - name: orderid
+              description: "orderid as orderid"        
+            - name: status
+              description: "statue as payment_status"
+            - name: amount  
+              description: "amount as payment_details"
+            - name: created
+              description: "created as payment_created"
+            - name: _batched_at
+              description: "batched_at as payment_at"
+              
+    - name: payment_details
+      description: "table as payment_details"
+      columns:
+            - name: id
+              description: "id as payment id"
+              tests:
+                - not_null
+            - name: bank_transfer_amount
+              description: "bank_transfer_amount category"
+            - name: credit_card_amount
+              description: "credit_card_amount category"
+            - name: gift_card_amount
+              description: "gift_card_amount category"
+            - name: coupon_amount
+              description: "coupon_amount category"
+        
+              
+
+sources:
+    - name: jaffle_shop
+      description: "schema used as Jaffle_shop"
+      database: RAW
+      schema: jaffle_shop
+      tables:
+        - name: customers
+          description: 'customer table'
+          columns:
+            - name: id
+              description: "id as customer id"
+            - name: first_name
+              description: "first_name as customer first_name"
+            - name: last_name
+              description: "last_name as customer last_name"    
+        - name: orders
+          description: "orders table used "
+          columns:
+            - name: id
+              description: "id as order id"
+            - name: user_id
+              description: "user_id as customer user_id"
+            - name: order_date
+              description: "order_date as customer order_date"
+            - name: status
+              description: '{{ doc("orders_status") }}'
+            - name: _etl_loaded_at
+              description: "_etl_loaded_at as order _etl_loaded_at"
+
+    - name: stripe
+      description: "schema used as stripe"
+      database: RAW
+      schema: stripe
+      tables:
+        - name: payment
+          description: "payment table used "
+          columns:
+            - name: id
+              description: "id as payment id"
+            - name: orderid
+              description: "orderid as payment order_id"
+            - name: paymentmethod
+              description: "paymentmethod as customer paymentmethod"
+            - name: status
+              description: "status as payment status"
+            - name: amount
+              description: "How much purchased "
+            - name: created
+              description: "created as payment created"
+            - name: _batched_at
+              description: "_batched_at as delivered at"
+

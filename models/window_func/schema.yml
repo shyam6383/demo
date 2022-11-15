@@ -1,0 +1,10 @@
+version : 2
+models:
+    - name: window
+sources:
+    - name: DBT_SKUMAR_STAGING
+      description: "schema used as DBT_SKUMAR_STAGING"
+      database: RAW
+      schema: DBT_SKUMAR_STAGING
+      tables:
+        - name: product_sales
